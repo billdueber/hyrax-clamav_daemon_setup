@@ -1,34 +1,47 @@
 # Hyrax::ClamavDaemonSetup
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hyrax/clamav_daemon_setup`. To experiment with that code, run `bin/console` for an interactive prompt.
+Sets up a Hyrax application to (optionally) use the `clamd` ClamAV daemon
+if it's running.
 
-TODO: Delete this and the text above, and describe your gem
+Main features:
 
-## Installation
+* Allows use of the clamav daemon
+* Can configure virus scanning by Rails env
+* Allows use of the `clamav` gem (Hyrax default as of this writing)
+* Doesn't complain if `clamav` or `clamav-client` aren't installed (so
+  you don't have to worry about setting up clamav on your dev machines)
+* Has an explicit `none` option to turn off virus scanning altogether
+* Easy configuration via `config/clamav.yml`
+
+## What get installed/changed
+
+* add `lib/clamav/clamav_setup` and `lib/clamav/daemon/scanner`
+* add `config/clamav.yml` and `config/clamav.yml.sample`
+* change `config/initializers/clamav.rb` to reference the new code
+
+## Installation and use
 
 Add this line to your application's Gemfile:
 
-```ruby
+```sh
 gem 'hyrax-clamav_daemon_setup'
 ```
 
-And then execute:
 
-    $ bundle
+...and run the generator
 
-Or install it yourself as:
+```sh
+bin/rails generate hyrax:clamav_daemon_setup
+```
 
-    $ gem install hyrax-clamav_daemon_setup
+Then:
 
-## Usage
+* In your rails root, run `bin/rails g hyrax:clamav_daemon_setup` to get the files
+* Edit the new file `config/clamav.yml` (set up to do no virus scanning by default)
+* Change your gemfile to include `gem 'clamav'` for default  Hyrax scanning,
+  `gem 'clamav-client'` for potential daemon use, both if you want, 
+  or neither if you're not planning on doing any virus scanning.
 
-TODO: Write usage instructions here
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
