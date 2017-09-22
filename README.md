@@ -37,7 +37,7 @@ bundle install
 Then:
 
 * In your rails root, run the generator
-  & `bin/rails g hyrax:clamav_daemon_setup`
+  * `bin/rails g hyrax:clamav_daemon_setup`
 * Change your gemfile to include:
   * `gem 'clamav'` for default  Hyrax scanning,
   * `gem 'clamav-client'` for potential daemon use, 
