@@ -28,20 +28,23 @@ gem 'hyrax-clamav_daemon_setup'
 ```
 
 
-...and run the generator
+...get it installed
 
 ```sh
-bin/rails generate hyrax:clamav_daemon_setup
+bundle install
 ```
 
 Then:
 
-* In your rails root, run `bin/rails g hyrax:clamav_daemon_setup` to get the files
-* Change your gemfile to include `gem 'clamav'` for default  Hyrax scanning,
-  `gem 'clamav-client'` for potential daemon use, both if you want, 
-  or neither if you're not planning on doing any virus scanning.
+* In your rails root, run the generator
+  & `bin/rails g hyrax:clamav_daemon_setup`
+* Change your gemfile to include:
+  * `gem 'clamav'` for default  Hyrax scanning,
+  * `gem 'clamav-client'` for potential daemon use, 
+  * both if you want, 
+  * ...or neither if you're not planning on doing any virus scanning.
 
-## Use
+## Configuring
 
 First off, you need to make sure your Gemfile has `clamav` and/or `clamav-client`
 if you want to do any virus scanning.
