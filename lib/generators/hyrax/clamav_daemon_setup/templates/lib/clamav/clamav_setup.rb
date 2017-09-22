@@ -1,7 +1,7 @@
-# A null scanner, for when you want to just turn it off
 
 module ClamAVSetup
 
+# A null scanner, for when you want to just turn it off
   class NullVirusScanner
     def infected?(file)
       Rails.logger.warn "Virus scanning turned off: file '#{file}' not checked."

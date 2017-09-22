@@ -1,6 +1,5 @@
 # An AV class that streams the file to an already-running
 # clamav daemon
-
 require 'clamav/client'
 class ClamAVDaemonScanner < Hydra::Works::VirusScanner
 #  include SemanticLogger::Loggable

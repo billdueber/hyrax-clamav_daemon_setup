@@ -16,10 +16,10 @@ Main features:
 ## What get installed/changed
 
 * add `lib/clamav/clamav_setup` and `lib/clamav/daemon/scanner`
-* add `config/clamav.yml` and `config/clamav.yml.sample`
+* add `config/clamav.yml` with a default configuration of "no virus scanning"
 * change `config/initializers/clamav.rb` to reference the new code
 
-## Installation and use
+## Installation
 
 Add this line to your application's Gemfile:
 
@@ -37,10 +37,69 @@ bin/rails generate hyrax:clamav_daemon_setup
 Then:
 
 * In your rails root, run `bin/rails g hyrax:clamav_daemon_setup` to get the files
-* Edit the new file `config/clamav.yml` (set up to do no virus scanning by default)
 * Change your gemfile to include `gem 'clamav'` for default  Hyrax scanning,
   `gem 'clamav-client'` for potential daemon use, both if you want, 
   or neither if you're not planning on doing any virus scanning.
+
+## Use
+
+First off, you need to make sure your Gemfile has `clamav` and/or `clamav-client`
+if you want to do any virus scanning.
+
+Everything is then configured in `config/clamav.yml`. A sample looks like this:
+
+```yaml
+
+# Define clamav services for each Rails environment
+#
+# service can be
+#  default (use the default Hyrax clamav process version)
+#  daemon (use a daemon, needs port and host)
+#  none (don't do any scanning regardless of what's loaded)
+
+## DEFAULT
+# If you specify the "default" scanner
+#  * Must have `gem "clamav"` in your Gemfile
+#  * Will use the default Hyrax scanner
+#
+#  If the `clamav` gem can't be found
+#  it'll log a warning and just not scan anything
+
+### DAEMON
+# If you specify 'daemon'
+#   * You need `gem "clamav-client"` in your Gemfile
+#   * You must set the port and host for the daemon
+# You'll throw errors in these conditions:
+#  * The port and host aren't set
+#  * The 'clamav-client' gem isn't installed
+#  * The daemon specified can't be contacted
+
+### NONE
+# Will log a warning and not do any virus scanning,
+# regardless of the other settings
+
+# Example
+# testing:
+#   service: none
+# development:
+#   service: default
+# production:
+#   service: none
+#   port: 3310
+#   host: 127.0.0.1
+
+
+testing:
+  service: none
+development:
+  service: daemon
+  port: 3310
+  host: 127.0.0.1
+production:
+  service: default
+
+
+```
 
 
 ## Contributing
